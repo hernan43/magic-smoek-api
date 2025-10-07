@@ -161,6 +161,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.9-arm-linux-musl)
       racc (~> 1.4)
+    nokogiri (1.18.9-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-musl)
@@ -173,6 +175,7 @@ GEM
     pg (1.6.2)
     pg (1.6.2-aarch64-linux)
     pg (1.6.2-aarch64-linux-musl)
+    pg (1.6.2-arm64-darwin)
     pg (1.6.2-x86_64-linux)
     pg (1.6.2-x86_64-linux-musl)
     pp (0.6.2)
@@ -187,6 +190,9 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.2.1)
+    rack-cors (3.0.0)
+      logger
+      rack (>= 3.0.14)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -288,6 +294,7 @@ GEM
     thor (1.4.0)
     thruster (0.1.15)
     thruster (0.1.15-aarch64-linux)
+    thruster (0.1.15-arm64-darwin)
     thruster (0.1.15-x86_64-linux)
     timeout (0.4.3)
     tzinfo (2.0.6)
@@ -309,6 +316,7 @@ PLATFORMS
   aarch64-linux-musl
   arm-linux-gnu
   arm-linux-musl
+  arm64-darwin-25
   x86_64-linux
   x86_64-linux-gnu
   x86_64-linux-musl
@@ -322,6 +330,7 @@ DEPENDENCIES
   kamal
   pg (~> 1.1)
   puma (>= 5.0)
+  rack-cors
   rails (~> 8.0.2, >= 8.0.2.1)
   rubocop-rails-omakase
   solid_cable
