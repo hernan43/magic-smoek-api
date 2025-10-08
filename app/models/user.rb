@@ -3,4 +3,6 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
   normalizes :email, with: ->(e) { e.strip.downcase }
+
+  has_many :projects, dependent: :destroy
 end

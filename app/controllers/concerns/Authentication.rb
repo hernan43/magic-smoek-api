@@ -19,13 +19,13 @@ module Authentication
           id: payload.id,
           email_address: payload.email
         },
-        exp: now + 3.minutes.to_i,
+        exp: now + 60.minutes.to_i,
         iat: now,
         iss: "rails_jwt_api",
         aud: "rails_jwt_client",
         sub: "User",
         jti: SecureRandom.uuid,
-        nbf: now + 1.second.to_i
+        nbf: now
       },
       Rails.application.credentials.jwt_secret,
       "HS256",
@@ -46,8 +46,15 @@ private
   end
 
   def current_user
+    return @current_user if @current_user
+
     decoded = decode
-    decoded.first["data"].with_indifferent_access
+    Rails.logger.info(decoded)
+    payload = decoded[0]  # Get the first element of the array
+
+    @current_user = User.find(payload["data"]["id"])
+  rescue ActiveRecord::RecordNotFound, JWT::DecodeError
+    nil
   end
 
   def authenticate
