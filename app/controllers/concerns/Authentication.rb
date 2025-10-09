@@ -49,7 +49,6 @@ private
     return @current_user if @current_user
 
     decoded = decode
-    Rails.logger.info(decoded)
     payload = decoded[0]  # Get the first element of the array
 
     @current_user = User.find(payload["data"]["id"])
