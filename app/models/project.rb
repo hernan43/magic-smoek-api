@@ -6,5 +6,5 @@ class Project < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
-  accepts_nested_attributes_for :entries
+  accepts_nested_attributes_for :entries, allow_destroy: true
 end
