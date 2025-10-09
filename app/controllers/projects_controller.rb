@@ -3,14 +3,13 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    @projects = current_user.projects
-
-    render json: @projects
+    @projects = current_user.projects.includes(:entries)
+    render json: @projects, include: :entries
   end
 
   # GET /projects/1
   def show
-    render json: @project
+    render json: @project, include: :entries
   end
 
   # POST /projects
@@ -18,7 +17,7 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.build(project_params)
 
     if @project.save
-      render json: @project, status: :created, location: @project
+      render json: @project, include: :entries, status: :created
     else
       render json: @project.errors, status: :unprocessable_entity
     end
@@ -27,7 +26,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      render json: @project
+      render json: @project, include: :entries
     else
       render json: @project.errors, status: :unprocessable_entity
     end
@@ -35,7 +34,8 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1
   def destroy
-    @project.destroy!
+    @project.destroy
+    head :no_content
   end
 
   private
@@ -46,6 +46,10 @@ class ProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.expect(project: [ :name, :description, :user_id ])
+      params.expect(project: [
+        :name,
+        :description,
+        { entries_attributes: [ [ :title, :body ] ] }
+      ])
     end
 end
